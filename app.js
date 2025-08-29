@@ -1,10 +1,10 @@
 const express = require('express');
 const app = express();
 
-// Middleware to parse JSON
+
 app.use(express.json());
 
-// POST endpoint
+
 app.post('/bfhl', (req, res) => {
     try {
         const { data } = req.body;
@@ -16,15 +16,15 @@ app.post('/bfhl', (req, res) => {
             });
         }
         
-        // Initialize arrays
+        
         const numbers = [];
         const alphabets = [];
         const oddNumbers = [];
         const evenNumbers = [];
         
-        // Process the input array
+        
         data.forEach(item => {
-            // Check if it's a number
+            
             if (!isNaN(item) && !isNaN(parseFloat(item))) {
                 const num = parseInt(item);
                 numbers.push(item);
@@ -35,23 +35,23 @@ app.post('/bfhl', (req, res) => {
                     oddNumbers.push(item);
                 }
             }
-            // Check if it's a single alphabet character
+            
             else if (typeof item === 'string' && item.length === 1 && /^[a-zA-Z]$/.test(item)) {
                 alphabets.push(item);
             }
         });
         
-        // Find highest lowercase alphabet
+       
         const lowercaseAlphabets = alphabets.filter(char => char >= 'a' && char <= 'z');
         const highestLowercase = lowercaseAlphabets.length > 0 ? 
             [lowercaseAlphabets.reduce((max, char) => char > max ? char : max)] : [];
         
-        // Response
+      
         const response = {
             "is_success": true,
-            "user_id": "john_doe_17091999", // Replace with your format: firstname_lastname_ddmmyyyy
-            "email": "john@xyz.com",        // Replace with your email
-            "roll_number": "ABCD123",       // Replace with your roll number
+            "user_id": "sanjay_sajnani_24012004", 
+            "email": "sanjay.22bce8541@vitapstudent.ac.in",        
+            "roll_number": "22BCE8541",    
             "odd_numbers": oddNumbers,
             "even_numbers": evenNumbers,
             "alphabets": alphabets,
@@ -68,7 +68,7 @@ app.post('/bfhl', (req, res) => {
     }
 });
 
-// Root endpoint
+
 app.get('/', (req, res) => {
     res.json({
         "message": "Bajaj Finserv Health Challenge API",
@@ -79,14 +79,14 @@ app.get('/', (req, res) => {
     });
 });
 
-// GET endpoint
+
 app.get('/bfhl', (req, res) => {
     res.status(200).json({
         "operation_code": 1
     });
 });
 
-// Start server
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
