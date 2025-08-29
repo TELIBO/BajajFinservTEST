@@ -16,13 +16,14 @@ app.post('/bfhl', (req, res) => {
             });
         }
         
-        
+
         const numbers = [];
         const alphabets = [];
         const oddNumbers = [];
         const evenNumbers = [];
+        const specialCharacters = [];
         
-        
+  
         data.forEach(item => {
             
             if (!isNaN(item) && !isNaN(parseFloat(item))) {
@@ -35,27 +36,45 @@ app.post('/bfhl', (req, res) => {
                     oddNumbers.push(item);
                 }
             }
-            
+       
             else if (typeof item === 'string' && item.length === 1 && /^[a-zA-Z]$/.test(item)) {
                 alphabets.push(item);
             }
+          
+            else if (typeof item === 'string' && item.length === 1 && !/^[a-zA-Z0-9]$/.test(item)) {
+                specialCharacters.push(item);
+            }
         });
         
-       
+        
         const lowercaseAlphabets = alphabets.filter(char => char >= 'a' && char <= 'z');
+        const uppercaseAlphabets = alphabets.filter(char => char >= 'A' && char <= 'Z');
+        
         const highestLowercase = lowercaseAlphabets.length > 0 ? 
             [lowercaseAlphabets.reduce((max, char) => char > max ? char : max)] : [];
         
-      
+        const highestUppercase = uppercaseAlphabets.length > 0 ? 
+            uppercaseAlphabets.reduce((max, char) => char > max ? char : max) : '';
+        
+        
+        const sum = numbers.reduce((total, num) => total + parseInt(num), 0).toString();
+        
+        
+        const concatString = (highestLowercase.length > 0 ? highestLowercase[0] : '') + highestUppercase;
+        
+        
         const response = {
             "is_success": true,
-            "user_id": "sanjay_sajnani_24012004", 
+            "user_id": "sanjay_sajnani_24012004",
             "email": "sanjay.22bce8541@vitapstudent.ac.in",        
-            "roll_number": "22BCE8541",    
+            "roll_number": "22BCE8541",      
             "odd_numbers": oddNumbers,
             "even_numbers": evenNumbers,
             "alphabets": alphabets,
-            "highest_lowercase_alphabet": highestLowercase
+            "highest_lowercase_alphabet": highestLowercase,
+            "special_characters": specialCharacters,
+            "sum": sum,
+            "concat_string": concatString
         };
         
         res.status(200).json(response);
