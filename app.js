@@ -60,7 +60,7 @@ app.post('/bfhl', (req, res) => {
         const sum = numbers.reduce((total, num) => total + parseInt(num), 0).toString();
         
         
-        const concatString = (highestLowercase.length > 0 ? highestLowercase[0] : '') + highestUppercase;
+        const concatString = highestUppercase + (highestLowercase.length > 0 ? highestLowercase[0] : '');
         
         
         const response = {
@@ -71,7 +71,7 @@ app.post('/bfhl', (req, res) => {
             "odd_numbers": oddNumbers,
             "even_numbers": evenNumbers,
             "alphabets": alphabets,
-            "highest_lowercase_alphabet": highestLowercase,
+            //"highest_lowercase_alphabet": highestLowercase,
             "special_characters": specialCharacters,
             "sum": sum,
             "concat_string": concatString
